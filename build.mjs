@@ -1,0 +1,12 @@
+import { build } from 'esbuild';
+import { readFile, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+const snapshot = JSON.parse(await readFile('artwork.json', 'utf8'));
+const runtime = snapshot.project.renderer === 'renderer.three' ? 'plugin-renderer-three' : 'plugin-renderer-document';
+const entry = 'import { boot } from "./runtime/' + runtime + '/src/runtime.ts"; import { createArtwork } from "./src/artwork.ts"; boot(createArtwork);';
+const { outputFiles } = await build({ stdin: { contents: entry, resolveDir: process.cwd() }, platform: 'browser', bundle: true, minify: true, target: 'es2022', write: false });
+const script = outputFiles[0].text;
+snapshot.buildHash = createHash('sha256').update(script).digest('hex');
+const boot = JSON.stringify(snapshot).replaceAll('<', '\\u003c');
+const template = await readFile('page-template.html', 'utf8');
+await writeFile('index.html', template.replace('/* BOOT */', () => 'window.__ART_BOOT__=' + boot + ';').replace('/* MODULE */', () => script.replace(/<(?=\/script)/gi, '\\x3c')));

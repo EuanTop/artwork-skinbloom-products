@@ -1,0 +1,67 @@
+[
+  {
+    "id": "category",
+    "label": "Category",
+    "type": "number",
+    "default": -1,
+    "min": -1,
+    "max": 6,
+    "step": 1,
+    "role": "runtime"
+  },
+  {
+    "id": "engaged",
+    "label": "Package opened",
+    "type": "boolean",
+    "default": false,
+    "role": "runtime"
+  },
+  {
+    "id": "learned",
+    "label": "Learning progress",
+    "type": "number",
+    "default": 0,
+    "min": 0,
+    "max": 127,
+    "step": 1,
+    "role": "runtime"
+  },
+  {
+    "id": "dialog",
+    "label": "Sheet",
+    "type": "select",
+    "default": "none",
+    "options": [
+      "none",
+      "skin",
+      "table",
+      "detail"
+    ],
+    "role": "runtime"
+  },
+  {
+    "id": "skinType",
+    "label": "Skin type",
+    "type": "select",
+    "default": "",
+    "options": [
+      "",
+      "Normal",
+      "Oily",
+      "Dry",
+      "Combination",
+      "Sensitive"
+    ],
+    "role": "runtime"
+  },
+  {
+    "id": "catalogId",
+    "label": "Original product",
+    "type": "number",
+    "default": 0,
+    "min": 0,
+    "max": 10000,
+    "step": 1,
+    "role": "runtime"
+  }
+]
